@@ -1,0 +1,6 @@
+globalBreakFrequency 5
+networkBreakFrequencyStd 1
+stationBreakFrequencyStd 1
+globalBreakSize 0.6
+networkBreakSizeStd 0.2
+stationBreakFrequencyStd 0
