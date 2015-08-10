@@ -12,44 +12,53 @@ create_or_read_worlds <- function(dataInDir  = "../data/temperature_stations",
   #                If these directories do not exist yet, they will be created, mirroring the structure of dataInDir.
   
   # Section 1.1. dataInDir
-  cleanFullDirs = dir(path = dataInDir, full.names= TRUE)
-  noWorlds = length(cleanFullDirs)
-  cleanSubDirs = dir(path = dataInDir, full.names= FALSE)
-  noWorlds2 = length(cleanSubDirs)
-  if(noWorlds != noWorlds2) {
-    stop("Error in Function create_or_read_worlds(), Section 1.1. Number of subdirs not the same.")
-  }
+#   cleanFullDirs3 <- list.dirs(path = dataInDir, full.names= TRUE) # Also lists main directory, not just sub-directoreis
+  cleanFullDirs <- dir(path = dataInDir, full.names= TRUE) # Also lists files, which are removed in next line
+  cleanFullDirs = cleanFullDirs[file.info(cleanFullDirs)$isdir]
+  noWorlds <- length(cleanFullDirs)
+  subDirs = basename(cleanFullDirs)
+
 #   pathBlind = c(dataInDir, "blind_")
 #   cleanBlindDirs = list.dirs(path = pathBlind)
   
   # Section 1.2. dataExtDir
-  urbanDirFileName = paste(dataExtDir, "urban.txt", sep="/")
+  urbanDirFileName <- paste(dataExtDir, "urban.txt", sep="/")
   if(file.exists(urbanDirFileName) == FALSE) {
-    urbanDirFileName = "dummy"  
+    urbanDirFileName <- "dummy"  
     warning("No urban file found. In Section 1.2 or function create_or_read_worlds(). Will use dummy instead.")
   }
-  climateDirFileName = paste(dataExtDir, "climate.txt", sep="/")
+  climateDirFileName <- paste(dataExtDir, "climate.txt", sep="/")
   if(file.exists(climateDirFileName) == FALSE) {
-    climateDirFileName = "dummy"  
+    climateDirFileName <- "dummy"  
     warning("No climate file found. In Section 1.2 or function create_or_read_worlds(). Will use dummy instead.")
   }
 
   # Section 1.3. dataOutDir
+  dataOutWorldDir <- vector(mode = "character", length=noWorlds)
   for(iDir in 1:noWorlds) {
-    dataOutWorldDir = paste(dataOutDir, cleanSubDirs[iDir], sep="/")
-    if(file.exists(dataOutWorldDir) == FALSE) {
+    dataOutWorldDir[iDir] <- paste(dataOutDir, subDirs[iDir], sep="/")
+    if(file.exists(dataOutWorldDir[iDir]) == FALSE) {
       dir.create(dataOutWorldDir)
     }
   }
 
-
   # Put information in structure called worlds
-  worlds = list()
-  worlds$noWorlds  = noWorlds
-  worlds$cleanDirs = cleanFullDirs
-  worlds$cleanSubDirs = cleanSubDirs
-  worlds$urbanDirFileName   = urbanDirFileName
-  worlds$climateDirFileName = climateDirFileName
+#   for(iWorld in 1:noWorlds) {
+#     world[iWorld] = list()
+#     world[iWorld]$noWorlds  = noWorlds
+#     world[iWorld]$cleanDirs = cleanFullDirs 
+#     world[iWorld]$subDirs = subDirs
+#     world[iWorld]$urbanDirFileName   = urbanDirFileName
+#     world[iWorld]$climateDirFileName = climateDirFileName
+#     world[iWorld]$errorDirs = dataOutWorldDir
+
+  worlds <- list()
+  worlds$noWorlds  <- noWorlds
+  worlds$cleanDirs <- cleanFullDirs
+  worlds$subDirs <- subDirs
+  worlds$urbanDirFileName   <- urbanDirFileName
+  worlds$climateDirFileName <- climateDirFileName
+  worlds$errorDirs <- dataOutWorldDir
   
   return(worlds)
 #   worlds <- list(noWorlds, cleanFullDirs, urbanDirFileName, climateDirFileName)
