@@ -7,10 +7,7 @@ read_settings <- function(currentDirs) {
 
   # TODO: The part for network specific settings is not implemented yet.
   
-<<<<<<< HEAD
   # Initialise
-=======
->>>>>>> 3a9dcf8082c941af33af865031b1d2955e3120d3
   source("put_settings.R")
   
   settingsDir <- currentDirs$cleanDir
@@ -25,37 +22,15 @@ read_settings <- function(currentDirs) {
     } else {
       stop('No settingfile found. Processing aborted in read_settings.R')
     }
-<<<<<<< HEAD
-=======
-#     settingsStr = c("# This file contains the default settings for all error worlds.",
-#                  "# These settings can be overrided by more detailed settings in the subdirectories.",
-#                  "# Comments can be added by starting the line with the pound sign, like this header.",
-#                  "# You can edit this file to update the settings. Any white space between name and value works.",
-#                  "# If you delete it, it will be replaced by the defaults mentioned in the function read_settings().",
-#                  "globalBreakFrequency 5",
-#                  "networkBreakFrequencyStd 1",
-#                  "stationBreakFrequencyStd 1", 
-#                  "globalBreakSize 0.6",
-#                  "networkBreakSizeStd 0.2",
-#                  "stationBreakFrequencyStd 0")
-#     write(settingsStr, file = settingsDirFileName)
->>>>>>> 3a9dcf8082c941af33af865031b1d2955e3120d3
   }
   settingsRead <- read.table(settingsDirFileName, col.names=c("settingName", "settingValue")) 
   settings <- put_settings(settingsRead) # Put values read in a structure with the names read.
 
   # Read world settings file.
-<<<<<<< HEAD
   settingsDirFileName <- paste(settingsDir, "world_settings.txt", sep="/")
   if(file.exists(settingsDirFileName) ) {
     settingsRead <- read.table(settingsDirFileName, col.names=c("settingName", "settingValue")) 
     settings <- put_settings(settingsRead, settings) # Put values read in a structure with the names read, overwriting defaults if double.
-=======
-  settingsDirFileName = paste(settingsDir, "world_settings.txt", sep="/")
-  if(file.exists(settingsDirFileName) ) {
-    settingsRead = read.table(settingsDirFileName, col.names=c("settingName", "settingValue")) #  colClasses=c("character"))
-    settings = put_settings(settingsRead, settings)
->>>>>>> 3a9dcf8082c941af33af865031b1d2955e3120d3
   }
 
   # Read network settings file.
