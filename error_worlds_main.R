@@ -10,17 +10,18 @@ error_worlds_main <- function() {
   source("read_settings.R")
   
   ## Section 1. Set up all Worlds
-  worlds <- create_or_read_worlds()
+  worlds <- read_structure_world_directories()
   
   for(iWorld in 1:worlds$noWorlds) {
     currentDirs <- set_current_dirs(worlds, iWorld)
     cat("working on world number: ", iWorld, "; named: ", currentDirs$subDir, ".\n", sep="")
     
-  ## Section 2. Network. Read the network properties (no. Stations, position, country, network they belong to)
-  #  network <- read_network_properties(worlds[iWorld])
+  ## Section 2. Settings for one World 
+    settings <- read_settings(currentDirs)
+    
+  ## Section 3. Network. Read the network properties (no. Stations, position, country, network they belong to)
+  # network <- read_network_properties(worlds[iWorld], settings)
   
-  ## Section 3. Settings for one World 
-  settings <- read_settings(currentDirs)
   
   ## Section 4. Properties. Compute properties of errors that affect multiple stations
   #  stations <- compute_multiple_station_properties(settings, network)

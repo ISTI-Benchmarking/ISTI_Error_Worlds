@@ -1,6 +1,24 @@
+# This file contains the default settings for all error worlds.
+# These settings can be overrided by more detailed settings in the subdirectories.
+# Comments can be added by starting the line with the pound sign, like this header.
+# You can edit this file to update the settings. Any white space between name and value works.
+# If you delete it, it will be replaced by the defaults mentioned in the function read_settings().
+# The setting names are case sensitive
+# 
+### Directory structure
+# The next line contains the directory with the data of the clean world to be used for this error world. The directory needs to be specified relative to the working directory of the processing software.
+cleanDataDir	..\data\temperature_stations\realisation_01
+# blindWorld, logical 
+# TRUE: world is blind and clean data should NOT be copied to public directory. 
+# FALSE: world is open and should be copied to public directory.
+blindWorld	TRUE
+#
+### This section of settings defines the break inhomogeneities
+# Next lines define the frequencies of the break inhomogeneities
 globalBreakFrequency 5
 networkBreakFrequencyStd 1
 stationBreakFrequencyStd 1
+# Next lines define the magnitudes of the break inhomogeneities
 globalBreakSize 0.6
 networkBreakSizeStd 0.2
 stationBreakFrequencyStd 0

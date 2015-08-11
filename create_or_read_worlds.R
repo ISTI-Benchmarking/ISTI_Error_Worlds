@@ -1,25 +1,18 @@
-create_or_read_worlds <- function(dataInDir  = "../data/temperature_stations", 
-                                  dataExtDir = "../data/external_data", 
-                                  dataOutDir = "../data/benchmark") {
+read_structure_world_directories <- function(dataExtDir = "../data/external_data", 
+                                             benchmarkDir = "../data/benchmark") {
   # This function will read the basic structure of the worlds, its directories and the number of directories.
   # 
-  # There are thre main data directories.
-  # 1. dataInDir:  Contains subdirectories with the clean worlds: the homogeneous temperature station data.
-  #                Will contain files with information on the inhomogeneities inserted.
-  # 2. dataExtDir: Contains data files that are needed to generate the error wolds. 
-  #                For example, information on the degree of urbanization of the stations or their climate classification.
-  # 3. dataOutDir: Will contain subdirectories with the newly generated errors worlds: inhomogeneous station data.
-  #                If these directories do not exist yet, they will be created, mirroring the structure of dataInDir.
+  # There are two main data directories.
+  # 1. benchmarkDir: Will contain subdirectories with the newly generated errors worlds: inhomogeneous station data.
+  #                  They have to be created in advance and will contain the settings files that are specific for this world or for specific networks.
+  # 2. dataExtDir:   Contains data files that are needed to generate the error wolds. 
+  #                  For example, information on the degree of urbanization of the stations or their climate classification.
   
-  # Section 1.1. dataInDir
-#   cleanFullDirs3 <- list.dirs(path = dataInDir, full.names= TRUE) # Also lists main directory, not just sub-directoreis
-  cleanFullDirs <- dir(path = dataInDir, full.names= TRUE) # Also lists files, which are removed in next line
-  cleanFullDirs = cleanFullDirs[file.info(cleanFullDirs)$isdir]
-  noWorlds <- length(cleanFullDirs)
-  subDirs = basename(cleanFullDirs)
-
-#   pathBlind = c(dataInDir, "blind_")
-#   cleanBlindDirs = list.dirs(path = pathBlind)
+  # Section 1.1. benchmarkDir
+  benchmarkFullDirs <- dir(path = benchmarkDir, full.names= TRUE) # Also lists files, which are removed in next line
+  benchmarkFullDirs = benchmarkFullDirs[file.info(benchmarkFullDirs)$isdir]
+  noWorlds <- length(benchmarkFullDirs)
+  subDirs = basename(benchmarkFullDirs)
   
   # Section 1.2. dataExtDir
   urbanDirFileName <- paste(dataExtDir, "urban.txt", sep="/")
@@ -33,20 +26,20 @@ create_or_read_worlds <- function(dataInDir  = "../data/temperature_stations",
     warning("No climate file found. In Section 1.2 or function create_or_read_worlds(). Will use dummy instead.")
   }
 
-  # Section 1.3. dataOutDir
-  dataOutWorldDir <- vector(mode = "character", length=noWorlds)
-  for(iDir in 1:noWorlds) {
-    dataOutWorldDir[iDir] <- paste(dataOutDir, subDirs[iDir], sep="/")
-    if(file.exists(dataOutWorldDir[iDir]) == FALSE) {
-      dir.create(dataOutWorldDir)
-    }
-  }
+#   # Section 1.3. dataOutDir
+#   dataOutWorldDir <- vector(mode = "character", length=noWorlds)
+#   for(iDir in 1:noWorlds) {
+#     dataOutWorldDir[iDir] <- paste(dataOutDir, subDirs[iDir], sep="/")
+#     if(file.exists(dataOutWorldDir[iDir]) == FALSE) {
+#       dir.create(dataOutWorldDir)
+#     }
+#   }
 
   # Put information in structure called worlds
 #   for(iWorld in 1:noWorlds) {
 #     world[iWorld] = list()
 #     world[iWorld]$noWorlds  = noWorlds
-#     world[iWorld]$cleanDirs = cleanFullDirs 
+#     world[iWorld]$cleanDirs = benchmarkFullDirs 
 #     world[iWorld]$subDirs = subDirs
 #     world[iWorld]$urbanDirFileName   = urbanDirFileName
 #     world[iWorld]$climateDirFileName = climateDirFileName
@@ -54,15 +47,13 @@ create_or_read_worlds <- function(dataInDir  = "../data/temperature_stations",
 
   worlds <- list()
   worlds$noWorlds  <- noWorlds
-  worlds$cleanDirs <- cleanFullDirs
+  worlds$benchmarkDirs <- benchmarkFullDirs
   worlds$subDirs <- subDirs
   worlds$urbanDirFileName   <- urbanDirFileName
   worlds$climateDirFileName <- climateDirFileName
-  worlds$errorDirs <- dataOutWorldDir
   
   return(worlds)
-#   worlds <- list(noWorlds, cleanFullDirs, urbanDirFileName, climateDirFileName)
+#   worlds <- list(noWorlds, benchmarkFullDirs, urbanDirFileName, climateDirFileName)
 #   names(settings) = c("noWorlds", "cleanDirs", "urbanDirFileName", "climateDirFileName")
 #   a=0
 }
-
