@@ -5,9 +5,16 @@
 # If you delete it, it will be replaced by the defaults mentioned in the function read_settings().
 # The setting names are case sensitive
 # 
-### Directory structure
-# The next line contains the directory with the data of the clean world to be used for this error world. The directory needs to be specified relative to the working directory of the processing software.
+### Directory structure, files and their settings
+# The next line contains the directory with the data of the clean (homogeneous) world to be used for this error world. The directory needs to be specified relative to the working directory of the processing software.
 cleanDataDir	..\data\temperature_stations\realisation_01
+cleanDataFileName MASKEDFIXCLEAN1_ISTI_stage3proxyelevs_loess03MDA60CLSfix_JUL2015.txt
+endYearClean	2018
+beginYearClean	1860
+# Directory for the external datasets, which are fixed to all worlds
+externalDir ..\data\external_data
+# The land-use file also contains information on the countries, which will be used a proxy for networks. 
+landUseDataFileName ISTILONGINVENTORY_stage3proxyelevs_JUL2015_landuse.dat
 # blindWorld, logical 
 # TRUE: world is blind and clean data should NOT be copied to public directory. 
 # FALSE: world is open and should be copied to public directory.

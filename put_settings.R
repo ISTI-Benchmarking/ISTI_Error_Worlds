@@ -12,7 +12,7 @@ put_settings <- function(settingsRead, settings) {
     # Initialise settings list (with the default settings)
     settings <- vector("list", length=noSettings)
     for(iSet in 1:noSettings) {
-      settings[iSet] <- settingsRead$settingValue[iSet]
+      settings[[iSet]] <- settingsRead$settingValue[iSet]
       names(settings)[iSet] <- as.character(settingsRead$settingName[iSet])
     }
   } else {
@@ -22,6 +22,21 @@ put_settings <- function(settingsRead, settings) {
       settings[[index]] <- settingsRead$settingValue[iSet]
     }
   }
+  for(iSet in 1:noSettings) {
+    # If it is possible to convert settingValue to a numerical value, do so.
+    if(!is.na(suppressWarnings(as.numeric(settings[[iSet]])))) {
+      settings[[iSet]] = as.numeric(settings[[iSet]])
+    }
+    # If it is possible to convert settingValue to TRUE, do so.
+    if(settings[[iSet]] == "TRUE") {
+      settings[[iSet]] <- TRUE
+    }
+    # If it is possible to convert settingValue to FALSE, do so.
+    if(settings[[iSet]] == "FALSE") {
+      settings[[iSet]] <- FALSE
+    }
+  }
+
   
   return(settings)
  }
