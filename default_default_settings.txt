@@ -28,4 +28,4 @@ stationBreakFrequencyStd 1
 # Next lines define the magnitudes of the break inhomogeneities
 globalBreakSize 0.6
 networkBreakSizeStd 0.2
-stationBreakFrequencyStd 0
+stationBreakSizeStd 0
