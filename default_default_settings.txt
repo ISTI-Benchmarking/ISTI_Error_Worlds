@@ -29,3 +29,7 @@ stationBreakFrequencyStd 1
 globalBreakSize 0.6
 networkBreakSizeStd 0.2
 stationBreakSizeStd 0
+# If there is a gap of 12 month or longer, how likely is a break:
+breakProbabilityGap 0.7
+
+

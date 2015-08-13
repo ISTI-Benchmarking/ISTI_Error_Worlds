@@ -27,7 +27,7 @@ error_worlds_main <- function() {
     stations <- compute_multiple_station_properties(settings, network)
   
   ## Section 5. Inhomogeneities. Read stations, insert inhomogeneities in single stations and save them
-  #  generate_errors_stations(setting, network, stations)
+   generate_errors_stations(setting, network, stations)
   }
 }
 
