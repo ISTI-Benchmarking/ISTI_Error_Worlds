@@ -36,11 +36,37 @@ read_network_properties <- function (worlds, settings) {
     
   ## Read urbanization and climate classification files
   dataDirFileName = paste(settings$externalDir, settings$landUseDataFileName, sep="/")
+#   data = read.table(file = dataDirFileName, skip=10, comment.char = "") # , 
+#                        col.names = c("stationIDs", "lat",     "lon",     "stationName", "country", "landuseclass", "urbanBool", rep("dummy",   12)),
+#                        colClasses= c("character",  "numeric", "numeric", "character",   "factor",  "integer",       "integer",  rep("integer", 12)) )
+  
+  
   data = read.fwf(file= dataDirFileName, width = c(12,           12,        10,        32,            28,         6,             12,          9,9,9, rep(8, 9)), 
                                      col.names = c("stationIDs", "lat",     "lon",     "stationName", "country", "landuseclass", "urbanBool", rep("dummy",   12)), 
-                  comment.char = "", skip=10)
+                                     colClasses= c("character",  "numeric", "numeric", "character",   "factor",  "integer",       "numeric",  rep("numeric", 12)), 
+                  comment.char = "", skip=10, strip.white=TRUE)
 
-  # TODO. Match these IDs with previous ones and put variables in network structure. 
+  if(length(which(data$stationIDs != network$stationIDs)) > 0) {
+    stop("Function read_network_properties expects the rows/station IDs to match between clean worlds and urbanization/landuse metadata file.")
+  } 
+  
+  # Determine network membership using the first two characters of the stationID, for large countries the third character for subnetworks is used as well.
+  netIDs = substr(network$stationIDs[], start=1, stop=2)
+  uniqueIDs = unique(netIDs)
+  noUnique = length(uniqueIDs)
+  indices = vector("list", noUnique)
+  for(iID in 1:noUnique) {
+    indices[[iID]] = which(netIDs == uniqueIDs[iID])
+  }  
+  # TODO split up large networks by using the 3 charchacter for the subnets
+
+  network$lat = data$lat
+  network$lon = data$lon
+  # network$countryName = data$country
+  network$urban = data$urbanBool
+  network$netIDs = netIDs
+  network$netIndices = indices
+  network$noNetworks = noUnique
   
   return(network)
 }

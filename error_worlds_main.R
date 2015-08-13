@@ -23,9 +23,8 @@ error_worlds_main <- function() {
   ## Section 3. Network. Read the network properties (no. Stations, position, country, network they belong to)
   network <- read_network_properties(worlds[iWorld], settings)
   
-  
   ## Section 4. Properties. Compute properties of errors that affect multiple stations
-  #  stations <- compute_multiple_station_properties(settings, network)
+#   stations <- compute_multiple_station_properties(settings, network)
   
   ## Section 5. Inhomogeneities. Read stations, insert inhomogeneities in single stations and save them
   #  generate_errors_stations(setting, network, stations)
