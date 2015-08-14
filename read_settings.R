@@ -2,16 +2,19 @@ read_settings <- function(currentDirs) {
   # This function reads the setting files.
   # There are three levels: default settings, world settings, network settings.
   # They are read in this order and later settings override older ones.
-  # The default settings valid for all worlds is in the directory above the benchmark worlds.
-  # If there is no default settings file, a file from this working directory will copied into the benchmark directory.
-  # The world and network settings are in the subdirectories of the benchmark worlds.
-
+  # The default settings valid for all worlds is in the directory above the error worlds.
+  # If there is no default settings file, a file from this working directory will be copied 
+  # into the error world directory. 
+  # The world and network settings are in the subdirectories of the error worlds.
+  # If they do not have a setting file a file from the error world directory of this code directory
+  # will be copied to the one of the data directory.
+  
   # TODO: The part for network specific settings is not implemented yet.
   
   # Initialise
   source("put_settings.R")
   
-  settingsDir <- currentDirs$benchmarkDir
+  settingsDir <- currentDirs$errorWorldDir
   defaultSettingsDir <- dirname(settingsDir)
 
   # Read default settings file.

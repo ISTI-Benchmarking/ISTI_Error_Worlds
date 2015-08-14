@@ -7,8 +7,8 @@
 # 
 ### Directory structure, files and their settings
 # The next line contains the directory with the data of the clean (homogeneous) world to be used for this error world. The directory needs to be specified relative to the working directory of the processing software.
-cleanDataDir	..\data\temperature_stations\realisation_01
-cleanDataFileName MASKEDFIXCLEAN1_ISTI_stage3proxyelevs_loess03MDA60CLSfix_JUL2015.txt
+cleanDataDir	Dummy
+cleanDataFileName Dummy
 endYearClean	2018
 beginYearClean	1860
 # Directory for the external datasets, which are fixed to all worlds

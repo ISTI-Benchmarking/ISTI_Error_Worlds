@@ -1,0 +1,4 @@
+# Directory and file name where the clean world for this error world can be found
+cleanDataDir	..\data\temperature_stations\realisation_01
+cleanDataFileName	MASKEDFIXCLEAN1_ISTI_stage3proxyelevs_loess03MDA60CLSfix_JUL2015.txt
+

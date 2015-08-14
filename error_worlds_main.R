@@ -11,6 +11,7 @@ error_worlds_main <- function() {
   source("read_network_properties.R")
   
   ## Section 1. Set up all Worlds
+  ######### Copy eror world structure to data dir
   worlds <- read_structure_world_directories()
   
   for(iWorld in 1:worlds$noWorlds) {
@@ -27,7 +28,7 @@ error_worlds_main <- function() {
     stations <- compute_multiple_station_properties(settings, network)
   
   ## Section 5. Inhomogeneities. Read stations, insert inhomogeneities in single stations and save them
-   generate_errors_stations(setting, network, stations)
+    generate_errors_stations(setting, network, stations, currentDirs)
   }
 }
 
