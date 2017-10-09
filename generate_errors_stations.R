@@ -1,6 +1,10 @@
 generate_errors_stations <- function (setting, network, stations, currentDirs) {
   # This function implements the inhomogeneities for single stations while looping over all stations.
-  # It does not produce output, but reads the clean data and directly writes the inhomogeneous data and the perturbations to a file.
+  # It does not produce output, but reads the clean data and directly writes the inhomogeneous data 
+  # and the perturbations to a file.
+
+  ## Section 0. Settings and initialisations
+  source("compute_gaps")
   
   # Initialisation
   noStations <- length(network$stationIDs)
@@ -15,14 +19,16 @@ generate_errors_stations <- function (setting, network, stations, currentDirs) {
   conInhom   <- file(inhomDataDirFileName,   "wt") # The inhomogeneous data (clean + perturbations)
   conMeta    <- file(metaDataDirFileName,    "wt") # File recording properties of inserted inhomogeneities
   
+  
+  ## Section 1. Loop over all stations, compute and insert inhomogeneities
   for(iStat in 1:noStations) {
     ## Compute properties of break inhomogeneities
     ## Compute positions of break inhomogeneities for gap breaks, clustered breaks and randomly positioned breaks
     # Initialise
     iBrk <- 0 # A break is abbreviated as brk because break is a reserved word in Rstat
-    brk = list()
-    maxLength = (settings$endYearClean - settings$beginYearClean + 1) * 12
-    brk$index = vector("integer", length=maxLength) 
+    brk <- list()
+    maxLength <- (settings$endYearClean - settings$beginYearClean + 1) * 12
+    brk$index <- vector("integer", length=maxLength) 
     
     # Positions of breaks in gaps
     # Read ASCII clean world data, first column station ID, rest monthly temps, every row a station.    
@@ -38,21 +44,21 @@ generate_errors_stations <- function (setting, network, stations, currentDirs) {
     # If the gap is shorter we linearly reduce the probability to zero for no gap.
     gaps <- compute_gaps(cleanData)
     gaps$length[gaps$length > 12] <- 12 # Gaps longer than a year, are set to one year
-    temp = 12 * settings$breakProbabilityGap
+    temp <- 12 * settings$breakProbabilityGap
     for(iGap in 1:gaps$noGaps) {
       if( runif(1) * temp < gaps$length[iGap]) {
-        iBrk = iBrk + 1
-        brk$index[iBreak] = gaps$indices[iGap]
+        iBrk <- iBrk + 1
+        brk$index[iBreak] <- gaps$indices[iGap]
       }
     }
     
     # Positions of clustered breaks 
     
-    
     # Positions of breaks with random positions
     ###### Remove too many breaks? 
     #remove breaks at same location
     
+    # station$breakFrequency # which is a vector("numeric", length=noStations)
     
     
     ## Compute properties of gradual inhomogeneities
@@ -61,13 +67,16 @@ generate_errors_stations <- function (setting, network, stations, currentDirs) {
     ## Implement inhomogeneities
     # Bias as random walk
     
+    # station$breakSize # which is a vector("numeric", length=noStations)
+    
+    
     # Stochastic component
     
     # Seasonal cycle
     
   }  
   
-  # Close files
+  ## Section 2. Close files
   close(conClean)
   close(conPerturb)
   close(conInhom)
