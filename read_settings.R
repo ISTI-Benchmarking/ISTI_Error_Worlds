@@ -14,8 +14,8 @@ read_settings <- function(currentDirs) {
   # Initialise
   source("put_settings.R")
   
-  settingsDir <- currentDirs$errorWorldDir
-  defaultSettingsDir <- dirname(settingsDir)
+  settingsDir <- currentDirs$errorWorldDir   # Directory of the current error world.
+  defaultSettingsDir <- dirname(settingsDir) # Directory above the current error world, with all error worlds.
 
   # Read default settings file.
   settingsDirFileName <- paste(defaultSettingsDir, "default_settings.txt", sep="/")
@@ -27,13 +27,13 @@ read_settings <- function(currentDirs) {
       stop('No setting file found. Processing aborted in read_settings.R')
     }
   }
-  settingsRead <- read.table(settingsDirFileName, col.names=c("settingName", "settingValue"), as.is = TRUE) 
+  settingsRead <- read.table(settingsDirFileName, col.names=c("settingName", "settingValue"), as.is=TRUE) 
   settings <- put_settings(settingsRead) # Put values read in a structure with the names read.
 
   # Read world settings file.
   settingsDirFileName <- paste(settingsDir, "world_settings.txt", sep="/")
   if(file.exists(settingsDirFileName) ) {
-    settingsRead <- read.table(settingsDirFileName, col.names=c("settingName", "settingValue"), as.is = TRUE) 
+    settingsRead <- read.table(settingsDirFileName, col.names=c("settingName", "settingValue"), as.is=TRUE) 
     settings <- put_settings(settingsRead, settings) # Put values read in a structure with the names read, overwriting defaults if double.
   }
 

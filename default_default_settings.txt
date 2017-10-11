@@ -1,0 +1,35 @@
+## Directories
+externalDir ..\data\external_data
+landUseDataFileName ISTILONGINVENTORY_stage3proxyelevs_JUL2015_landuse.new_tabs.vv.dat
+cleanDataDir ..\data\clean_worlds\realisation_01
+cleanDataFileName MASKEDFIXCLEAN1_ISTI_stage3proxyelevs_loess03MDA60CLSfix_JUL2015.txt
+perturbationDataFileName inhomogeneities.txt
+inhomogeneousDataFileName inhomogeneous_benchmark.txt
+metaDataFileName meta_data.txt
+
+## Properties of the clean data
+# beginYearClean 
+# endYearClean 
+noYearsClean 159
+
+## Properties of the inhomogeneities
+# Break frequencies
+globalRandomBreakFrequency 4      # Frequency of random breaks per century
+networkBreakFrequencyStd 1
+stationBreakFrequencyStd 1
+
+globalBiasedBreakFrequency 2      # Frequency of biased network-wide breaks per century
+globalBiasedBreakFrequencyStd  10 # Variations of the year of the biased breaks in years
+networkBiasedBreakFrequencyStd 10 # Variations of the year of the biased breaks in years
+stationBiasedBreakFrequencyStd 10 # Variations of the year of the biased breaks in years
+
+percentageRandomWalkBreaks 50
+breakProbabilityGapFactor 2
+
+#Break sizes
+globalJumpSize 0.8      # The break size as the jump from one homogeneous subperiod to the next
+networkJumpSizeStd 0.2
+stationJumpSizeStd 0
+
+trendBiasInhom 0.3 # The trend bias in °C per century due to the biased break inhomogeneities
+

@@ -22,6 +22,8 @@ put_settings <- function(settingsRead, settings) {
       settings[[index]] <- settingsRead$settingValue[iSet]
     }
   }
+  
+  noSettings <- length(settings)
   for(iSet in 1:noSettings) {
     # If it is possible to convert settingValue to a numerical value, do so.
     if(!is.na(suppressWarnings(as.numeric(settings[[iSet]])))) {
@@ -37,6 +39,5 @@ put_settings <- function(settingsRead, settings) {
     }
   }
 
-  
   return(settings)
  }

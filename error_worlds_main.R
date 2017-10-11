@@ -1,4 +1,4 @@
-error_worlds_main <- function() {
+# error_worlds_main <- function() {
   # This is the main function that introduces the inhomogeneities to the ISTI clean worlds
   #
   # Version 0.01: Victor Venema
@@ -9,9 +9,11 @@ error_worlds_main <- function() {
   source("set_current_dirs.R")
   source("read_settings.R")
   source("read_network_properties.R")
+  source("compute_multiple_station_properties.R")
+  source("generate_errors_stations.R")
   
   ## Section 1. Set up all Worlds
-  ######### Copy eror world structure to data dir
+  ######### Copy error world structure to data dir
   worlds <- read_structure_world_directories()
   
   for(iWorld in 1:worlds$noWorlds) {
@@ -28,7 +30,7 @@ error_worlds_main <- function() {
     stations <- compute_multiple_station_properties(settings, network)
   
   ## Section 5. Inhomogeneities. Read stations, insert inhomogeneities in single stations and save them
-    generate_errors_stations(setting, network, stations, currentDirs)
+    generate_errors_stations(settings, network, stations, currentDirs)
   }
-}
+# }
 

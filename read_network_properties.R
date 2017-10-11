@@ -40,12 +40,22 @@ read_network_properties <- function (worlds, settings) {
 
     
   ## Read urbanization
-  urbanDirFileName = paste(settings$externalDir, settings$landUseDataFileName, sep="/")
-  urban = read.fwf(file= urbanDirFileName, width = c(12,           12,        10,        32,            28,         6,             12,          9,9,9, rep(8, 9)), 
-                                       col.names = c("stationIDs", "lat",     "lon",     "stationName", "country", "landuseclass", "urbanBool", rep("dummy",   12)), 
-                                       colClasses= c("character",  "numeric", "numeric", "character",   "factor",  "integer",       "numeric",  rep("numeric", 12)), 
-                    comment.char = "", skip=10, strip.white=TRUE)
-
+  urbanDirFileName = paste(settings$externalDir, settings$landUseDataFileName, sep = "/")
+  # urban = read.fwf(file = urbanDirFileName, width = c(11,           10,        10,        31,            27,         6,             12,          9,9,9, rep(8, 9)), 
+  #                                       col.names = c("stationIDs", "lat",     "lon",     "stationName", "country", "landuseclass", "urbanBool", rep("dummy",   12)), 
+  #                                       colClasses= c("character",  "numeric", "numeric", "character",   "factor",  "numeric",      "numeric",   rep("numeric", 12)), 
+  #                                       comment.char = "", skip=8, strip.white = TRUE,  na.strings = "--")
+  urban = read.table(file = urbanDirFileName,  
+                   col.names = c("stationIDs", "lat",     "lon",     "stationName", "country", "landuseclass", "urbanBool", rep("dummy",   12)), 
+                   colClasses= c("character",  "numeric", "numeric", "character",   "factor",  "numeric",      "numeric",   rep("NULL", 12)), 
+                   comment.char = "", skip=10, strip.white = TRUE,  na.strings = "--") # , nrows=10)
+  #                    comment.char = "", skip=10+16284-11, strip.white = TRUE,  na.strings = "--", nrows=10)    
+  # urban = read.table(file = urbanDirFileName,  
+  #                    col.names = c("stationIDs", "lat",     "lon",     "stationName", "country", "landuseclass", "urbanBool", rep("dummy",   12)), 
+  #                    colClasses= c("character",  "numeric", "numeric", "character",   "factor",  "numeric",      "numeric",   rep("NULL", 12)), 
+  #                    comment.char = "", skip=10+16284-11, strip.white = TRUE,  na.strings = "--", nrows=10)  
+  network$stationIDs = urban$stationIDs
+  
 #   if(length(which(data$stationIDs != network$stationIDs)) > 0) {
 #     stop("Function read_network_properties expects the rows/station IDs to match between clean worlds and urbanization/landuse metadata file.")
 #   } 
