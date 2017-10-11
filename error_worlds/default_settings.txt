@@ -13,6 +13,9 @@ endYearClean	2018
 beginYearClean	1860
 # Directory for the external datasets, which are fixed to all worlds
 externalDir ..\data\external_data
+perturbationDataFileName	perturbations.txt
+inhomogeneitiesDataFileName	errorWorld.txt
+metaDataFileName	metaDataBreaks.txt
 # The land-use file also contains information on the countries, which will be used a proxy for networks. 
 landUseDataFileName ISTILONGINVENTORY_stage3proxyelevs_JUL2015_landuse.dat
 # blindWorld, logical 

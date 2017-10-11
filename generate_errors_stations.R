@@ -4,9 +4,13 @@ generate_errors_stations <- function (settings, network, stations, currentDirs) 
   # and the perturbations to a file.
 
   ## Section 0. Settings and initialisations
+<<<<<<< HEAD
   source("compute_break_positions_type.R")
   source("generate_walk.R")
   source("generate_noise.R")
+=======
+  source("compute_gaps")
+>>>>>>> 4ef373b4d8e2dbb0437a187a6b00b85458225d2a
   
   # Initialisation
   noStations <- length(network$stationIDs)
@@ -23,6 +27,7 @@ generate_errors_stations <- function (settings, network, stations, currentDirs) 
   # conMeta    <- file(metaDataDirFileName,    "wt") # File recording properties of inserted inhomogeneities
   
   
+<<<<<<< HEAD
   ## Section 1. Loop over all stations, compute and insert inhomogeneities
   # for(iStat in 1:noStations) {
   warning("Number of stations is reduced to speed up development, change at the end.")
@@ -81,6 +86,66 @@ generate_errors_stations <- function (settings, network, stations, currentDirs) 
   
   ## Section 2. Close files
   
+=======
+  
+  ## Section 1. Loop over all stations, compute and insert inhomogeneities
+  for(iStat in 1:noStations) {
+    ## Compute properties of break inhomogeneities
+    ## Compute positions of break inhomogeneities for gap breaks, clustered breaks and randomly positioned breaks
+    # Initialise
+    iBrk <- 0 # A break is abbreviated as brk because break is a reserved word in Rstat
+    brk <- list()
+    maxLength <- (settings$endYearClean - settings$beginYearClean + 1) * 12
+    brk$index <- vector("integer", length=maxLength) 
+    
+    # Positions of breaks in gaps
+    # Read ASCII clean world data, first column station ID, rest monthly temps, every row a station.    
+    cleanData <- scan(file=conClean, what="character", nlines=1, na.strings = "-99.99")  
+    stationID <- cleanData[1]
+    cleanData <- numeric(cleanData[2:length(cleanData)])
+    
+#     if(length(which(data$stationIDs != network$stationIDs)) > 0) {
+#       stop("Function read_network_properties expects the rows/station IDs to match between clean worlds and urbanization/landuse metadata file.")
+#     } 
+    
+    # Determine gaps, which have a higher break frequency. Gaps longer than a year have a probability of settings$breakProbabilityGap.
+    # If the gap is shorter we linearly reduce the probability to zero for no gap.
+    gaps <- compute_gaps(cleanData)
+    gaps$length[gaps$length > 12] <- 12 # Gaps longer than a year, are set to one year
+    temp <- 12 * settings$breakProbabilityGap
+    for(iGap in 1:gaps$noGaps) {
+      if( runif(1) * temp < gaps$length[iGap]) {
+        iBrk <- iBrk + 1
+        brk$index[iBreak] <- gaps$indices[iGap]
+      }
+    }
+    
+    # Positions of clustered breaks 
+    
+    # Positions of breaks with random positions
+    ###### Remove too many breaks? 
+    #remove breaks at same location
+    
+    # station$breakFrequency # which is a vector("numeric", length=noStations)
+    
+    
+    ## Compute properties of gradual inhomogeneities
+    # No seasonal cycle
+    
+    ## Implement inhomogeneities
+    # Bias as random walk
+    
+    # station$breakSize # which is a vector("numeric", length=noStations)
+    
+    
+    # Stochastic component
+    
+    # Seasonal cycle
+    
+  }  
+  
+  ## Section 2. Close files
+>>>>>>> 4ef373b4d8e2dbb0437a187a6b00b85458225d2a
   close(conClean)
   # close(conPerturb)
   # close(conInhom)
