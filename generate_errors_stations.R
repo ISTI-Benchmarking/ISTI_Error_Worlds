@@ -4,13 +4,13 @@ generate_errors_stations <- function (settings, network, stations, currentDirs) 
   # and the perturbations to a file.
 
   ## Section 0. Settings and initialisations
-<<<<<<< HEAD
+# <<<<<<< HEAD
   source("compute_break_positions_type.R")
   source("generate_walk.R")
   source("generate_noise.R")
-=======
+# =======
   source("compute_gaps")
->>>>>>> 4ef373b4d8e2dbb0437a187a6b00b85458225d2a
+# >>>>>>> 4ef373b4d8e2dbb0437a187a6b00b85458225d2a
   
   # Initialisation
   noStations <- length(network$stationIDs)
@@ -27,67 +27,63 @@ generate_errors_stations <- function (settings, network, stations, currentDirs) 
   # conMeta    <- file(metaDataDirFileName,    "wt") # File recording properties of inserted inhomogeneities
   
   
-<<<<<<< HEAD
-  ## Section 1. Loop over all stations, compute and insert inhomogeneities
-  # for(iStat in 1:noStations) {
-  warning("Number of stations is reduced to speed up development, change at the end.")
-  for(iStat in 1:1e2) {
-    ## Compute properties of break inhomogeneities
-
-    # Read ASCII clean world data, first column station ID, rest monthly temps, every row a station.    
-    cleanData <- scan(file=conClean, what="character", nlines=1, na.strings="-99.99", quiet=TRUE)  
-    if(length(cleanData) > 0) {
-      stationID   <- cleanData[1]
-      noValSeries <- length(cleanData)
-      cleanData   <- cleanData[2:noValSeries]
-      cleanData   <- as.numeric(cleanData)
-      noValSeries <- noValSeries - 1 # Number of monthly values in one station
-      
-  #     if(length(which(data$stationIDs != network$stationIDs)) > 0) {
-  #       stop("Function read_network_properties expects the rows/station IDs to match between clean worlds and urbanization/landuse metadata file.")
-  #     } 
-  
-      brk <- compute_break_positions_type(stations, iStat, settings, noValSeries, cleanData)
-      noBreaks   <- length(brk$index)
-      
-      ## Compute properties of gradual inhomogeneities
-      # gradual inhomogeneities have no seasonal cycle
-      # inhomGradual <- 
-        
-      ## Implement inhomogeneities
-      if(noBreaks > 0) {
-        # Breaks as random walk
-        biasPerBiasedBreak <- settings$trendBiasInhom / settings$globalBiasedBreakFrequency
-        brk$walk[] <- FALSE
-        indexWalk <- which(runif(noBreaks) * 100 < settings$percentageRandomWalkBreaks)
-        brk$walk[indexWalk] <- TRUE
-        # print(brk$biased[indexWalk])
-        inhomWalk  <- generate_walk(brk$index[indexWalk],  brk$biased[indexWalk], noValSeries, stations$jumpSize[iStat], biasPerBiasedBreak)
-  
-        # Breaks as noisy deviations
-        indexNoise <- which(brk$walk == FALSE)
-        inhomNoise <- generate_noise(brk$index[indexNoise], brk$biased[indexNoise], noValSeries, stations$jumpSize[iStat], settings$trendBiasInhom)
-        inhom <- inhomWalk + inhomNoise # + inhomGradual
-        a <- 0
-
-
-      # Stochastic component
-      
-      # Seasonal cycle
-        
-      } else {
-        inhom = cleanData * 0
-      } # If no breaks    
-    } else { # If data in line
-      warning("Emptpy line found in clean data file.")
-    }
-    
-  } # Loop over all lines/stations
-  
-  ## Section 2. Close files
-  
-=======
-  
+# <<<<<<< HEAD
+#   ## Section 1. Loop over all stations, compute and insert inhomogeneities
+#   # for(iStat in 1:noStations) {
+#   warning("Number of stations is reduced to speed up development, change at the end.")
+#   for(iStat in 1:1e2) {
+#     ## Compute properties of break inhomogeneities
+# 
+#     # Read ASCII clean world data, first column station ID, rest monthly temps, every row a station.    
+#     cleanData <- scan(file=conClean, what="character", nlines=1, na.strings="-99.99", quiet=TRUE)  
+#     if(length(cleanData) > 0) {
+#       stationID   <- cleanData[1]
+#       noValSeries <- length(cleanData)
+#       cleanData   <- cleanData[2:noValSeries]
+#       cleanData   <- as.numeric(cleanData)
+#       noValSeries <- noValSeries - 1 # Number of monthly values in one station
+#       
+#   #     if(length(which(data$stationIDs != network$stationIDs)) > 0) {
+#   #       stop("Function read_network_properties expects the rows/station IDs to match between clean worlds and urbanization/landuse metadata file.")
+#   #     } 
+#   
+#       brk <- compute_break_positions_type(stations, iStat, settings, noValSeries, cleanData)
+#       noBreaks   <- length(brk$index)
+#       
+#       ## Compute properties of gradual inhomogeneities
+#       # gradual inhomogeneities have no seasonal cycle
+#       # inhomGradual <- 
+#         
+#       ## Implement inhomogeneities
+#       if(noBreaks > 0) {
+#         # Breaks as random walk
+#         biasPerBiasedBreak <- settings$trendBiasInhom / settings$globalBiasedBreakFrequency
+#         brk$walk[] <- FALSE
+#         indexWalk <- which(runif(noBreaks) * 100 < settings$percentageRandomWalkBreaks)
+#         brk$walk[indexWalk] <- TRUE
+#         # print(brk$biased[indexWalk])
+#         inhomWalk  <- generate_walk(brk$index[indexWalk],  brk$biased[indexWalk], noValSeries, stations$jumpSize[iStat], biasPerBiasedBreak)
+#   
+#         # Breaks as noisy deviations
+#         indexNoise <- which(brk$walk == FALSE)
+#         inhomNoise <- generate_noise(brk$index[indexNoise], brk$biased[indexNoise], noValSeries, stations$jumpSize[iStat], settings$trendBiasInhom)
+#         inhom <- inhomWalk + inhomNoise # + inhomGradual
+#         a <- 0
+# 
+# 
+#       # Stochastic component
+#       
+#       # Seasonal cycle
+#         
+#       } else {
+#         inhom = cleanData * 0
+#       } # If no breaks    
+#     } else { # If data in line
+#       warning("Emptpy line found in clean data file.")
+#     }
+#     
+#   } # Loop over all lines/stations
+#   
   ## Section 1. Loop over all stations, compute and insert inhomogeneities
   for(iStat in 1:noStations) {
     ## Compute properties of break inhomogeneities
@@ -145,7 +141,6 @@ generate_errors_stations <- function (settings, network, stations, currentDirs) 
   }  
   
   ## Section 2. Close files
->>>>>>> 4ef373b4d8e2dbb0437a187a6b00b85458225d2a
   close(conClean)
   # close(conPerturb)
   # close(conInhom)

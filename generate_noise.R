@@ -10,11 +10,11 @@ generate_noise <- function(positions, biased, noValSeries, jumpSize, trendBiasIn
     noBreaks  <- length(positions)
     positions <- c(positions, 1)
     
-    noiseLevel <- jumpSize*jumpSize # The jump sizes are determined by the levels of two homogeneous subperiods, the noise for one period thus needs to be smaller. Variances are additive.
+    noiseLevel <- jumpSize*sqrt(2) # The jump sizes are determined by the levels of two homogeneous subperiods, the noise for one period thus needs to be smaller. Variances are additive.
     factor <- 1/(12*100)
-    randomNumber <- 0
+    # randomNumber <- 0
     biasLevel <- 0
-    breakSignal[positions[1]:noValSeries] <- randomNumber
+    breakSignal[positions[1]:noValSeries] <- 0
     for(iBreak in 1:noBreaks) {
       randomNumber <- rnorm(1) * noiseLevel
       if(biased[iBreak]) {
